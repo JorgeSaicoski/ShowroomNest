@@ -2,7 +2,7 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 @Schema()
-export class Showroom {
+export class Project {
   @Prop({ required: true })
   name: string;
 
@@ -16,5 +16,5 @@ export class Showroom {
   images: string;
 }
 
-export type ShowroomDocument = Showroom & Document;
-export const ShowroomSchema = SchemaFactory.createForClass(Showroom);
+export type ProjectDocument = Project & Document;
+export const ProjectSchema = SchemaFactory.createForClass(Project);
