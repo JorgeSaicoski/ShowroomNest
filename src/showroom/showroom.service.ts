@@ -1,46 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { Project } from './interfaces';
-import { CreateProjectDto, UpdateProjectDto } from './dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Showroom, ShowroomDocument } from './showroom.schema';
 
 @Injectable()
 export class ShowroomService {
-  private projects: Project[] = [];
-
-  getAllProjects(): Project[] {
-    return this.projects;
+  constructor(
+    @InjectModel(Showroom.name) private showroomModel: Model<ShowroomDocument>,
+  ) {}
+  async create(showroom: Showroom): Promise<Showroom> {
+    const createdShowroom = new this.showroomModel(showroom);
+    return createdShowroom.save();
   }
-
-  getProjectById(id: string): Project {
-    return this.projects.find((project) => project.id === id);
+  async findAll(): Promise<Showroom[]> {
+    return this.showroomModel.find().exec();
   }
-
-  createProject(createProjectDto: CreateProjectDto): Project {
-    const newProject: Project = {
-      id: /* generate or assign a unique ID */,
-      ...createProjectDto,
-    };
-    this.projects.push(newProject);
-    return newProject;
+  async findById(id: string): Promise<Showroom> {
+    return this.showroomModel.findById(id).exec();
   }
-
-  updateProject(id: string, updateProjectDto: UpdateProjectDto): Project {
-    const projectIndex = this.projects.findIndex((project) => project.id === id);
-    if (projectIndex !== -1) {
-      this.projects[projectIndex] = {
-        ...this.projects[projectIndex],
-        ...updateProjectDto,
-      };
-      return this.projects[projectIndex];
-    }
-    return null;
+  async update(id: string, showroom: Showroom): Promise<Showroom> {
+    return this.showroomModel.findByIdAndUpdate(id, showroom, { new: true }).exec();
   }
-
-  deleteProject(id: string): Project {
-    const projectIndex = this.projects.findIndex((project) => project.id === id);
-    if (projectIndex !== -1) {
-      const deletedProject = this.projects.splice(projectIndex, 1)[0];
-      return deletedProject;
-    }
-    return null;
+  async delete(id: string): Promise<Showroom> {
+    return this.showroomModel.findByIdAndDelete(id).exec();
   }
 }
