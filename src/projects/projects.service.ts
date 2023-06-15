@@ -11,8 +11,8 @@ export class ProjectsService {
     @InjectModel(Project.name) private projectModel: Model<ProjectDocument>,
   ) {}
   async create(createProjectDto: CreateProjectDto): Promise<Project> {
-    const createdProject = new this.projectModel;
-    return createdProject.save;
+    const createdProject: Project = new this.projectModel(createProjectDto);
+    return createdProject.save();
   }
 
   async findAll(): Promise<Project[]> {
@@ -24,7 +24,9 @@ export class ProjectsService {
   }
 
   async update(id: string, updateProjectDto: UpdateProjectDto) {
-    return this.projectModel.findByIdAndUpdate(id, updateProjectDto, {new:true}).exec();
+    return this.projectModel
+      .findByIdAndUpdate(id, updateProjectDto, { new: true })
+      .exec();
   }
 
   async delete(id: string) {
