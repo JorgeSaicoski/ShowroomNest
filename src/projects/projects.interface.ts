@@ -1,4 +1,4 @@
-export interface Projects {
+export interface Project {
   name: string;
   description?: string;
   client?: string;

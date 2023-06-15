@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
+import { Project } from './projects.interface'
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 
@@ -18,9 +19,11 @@ export class ProjectsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.projectsService.findOne(+id);
+  async findById(@Param('id') id: string): Promise<Project>{
+    return this.projectsService.findById(id);
   }
+
+
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) {
@@ -29,6 +32,6 @@ export class ProjectsController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.projectsService.remove(+id);
+    return this.projectsService.delete(id);
   }
 }
