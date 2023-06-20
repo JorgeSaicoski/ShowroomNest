@@ -1,27 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Showroom, ShowroomDocument } from './showroom.schema';
+import { CreateShowroomDto } from './dto/create-showroom.dto';
+import { UpdateShowroomDto } from './dto/update-showroom.dto';
 
 @Injectable()
 export class ShowroomService {
-  constructor(
-    @InjectModel(Showroom.name) private showroomModel: Model<ShowroomDocument>,
-  ) {}
-  async create(showroom: Showroom): Promise<Showroom> {
-    const createdShowroom = new this.showroomModel(showroom);
-    return createdShowroom.save();
+  create(createShowroomDto: CreateShowroomDto) {
+    return 'This action adds a new showroom';
   }
-  async findAll(): Promise<Showroom[]> {
-    return this.showroomModel.find().exec();
+
+  findAll() {
+    return `This action returns all showroom`;
   }
-  async findById(id: string): Promise<Showroom> {
-    return this.showroomModel.findById(id).exec();
+
+  findOne(id: number) {
+    return `This action returns a #${id} showroom`;
   }
-  async update(id: string, showroom: Showroom): Promise<Showroom> {
-    return this.showroomModel.findByIdAndUpdate(id, showroom, { new: true }).exec();
+
+  update(id: number, updateShowroomDto: UpdateShowroomDto) {
+    return `This action updates a #${id} showroom`;
   }
-  async delete(id: string): Promise<Showroom> {
-    return this.showroomModel.findByIdAndDelete(id).exec();
+
+  remove(id: number) {
+    return `This action removes a #${id} showroom`;
   }
 }

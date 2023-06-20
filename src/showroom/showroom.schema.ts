@@ -1,5 +1,5 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
 
 @Schema()
 export class Showroom {
@@ -14,6 +14,12 @@ export class Showroom {
 
   @Prop()
   images: string;
+
+  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Project' }] }) // Array of Project references
+  projects: MongooseSchema.Types.ObjectId[];
+  /* !!
+  Here will come the language schema that will have a  list of projects and one showroom.
+  */
 }
 
 export type ShowroomDocument = Showroom & Document;

@@ -1,33 +1,34 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ShowroomService } from './showroom.service';
-import { Showroom } from './interfaces';
+import { CreateShowroomDto } from './dto/create-showroom.dto';
+import { UpdateShowroomDto } from './dto/update-showroom.dto';
 
-@Controller('showrooms')
+@Controller('showroom')
 export class ShowroomController {
   constructor(private readonly showroomService: ShowroomService) {}
 
   @Post()
-  async create(@Body() showroom: Showroom): Promise<Showroom> {
-    return await this.showroomService.create(showroom);
+  create(@Body() createShowroomDto: CreateShowroomDto) {
+    return this.showroomService.create(createShowroomDto);
   }
 
   @Get()
-  async findAll(): Promise<Showroom[]> {
+  findAll() {
     return this.showroomService.findAll();
   }
 
   @Get(':id')
-  async findById(@Param('id') id: string): Promise<Showroom> {
-    return this.showroomService.findById(id);
+  findOne(@Param('id') id: string) {
+    return this.showroomService.findOne(+id);
   }
 
-  @Put(':id')
-  async update(@Param('id') id: string, @Body() showroom: Showroom): Promise<Showroom> {
-    return this.showroomService.update(id, showroom);
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateShowroomDto: UpdateShowroomDto) {
+    return this.showroomService.update(+id, updateShowroomDto);
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<Showroom> {
-    return this.showroomService.delete(id);
+  remove(@Param('id') id: string) {
+    return this.showroomService.remove(+id);
   }
 }
