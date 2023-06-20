@@ -8,7 +8,7 @@ export class ShowroomController {
 
   @Post()
   async create(@Body() showroom: Showroom): Promise<Showroom> {
-    return this.showroomService.create(showroom);
+    return await this.showroomService.create(showroom);
   }
 
   @Get()
