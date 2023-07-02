@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ShowroomModule } from './showroom/showroom.module';
+import { ValuesModule } from './values/values.module';
+import { ProductsModule } from './products/products.module';
+import { CoinsModule } from './coins/coins.module';
 import { ContactModule } from './contact/contact.module';
 import { DescriptionsModule } from './coins/descriptions/descriptions.module';
 import { DescriptionsModule } from './values/descriptions/descriptions.module';
@@ -21,7 +24,10 @@ import { ShowroomModule } from './showroom/showroom.module';
     LanguagesModule,
     TextsModule,
     DescriptionsModule,
-    ContactModule
+    ContactModule,
+    CoinsModule,
+    ProductsModule,
+    ValuesModule
   ],
   controllers: [AppController],
   providers: [AppService],
