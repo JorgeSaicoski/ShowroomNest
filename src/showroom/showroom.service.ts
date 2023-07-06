@@ -1,26 +1,63 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Showroom } from './entities/showroom.entity';
 import { CreateShowroomDto } from './dto/create-showroom.dto';
 import { UpdateShowroomDto } from './dto/update-showroom.dto';
 
 @Injectable()
 export class ShowroomService {
-  create(createShowroomDto: CreateShowroomDto) {
-    return 'This action adds a new showroom';
+  constructor(
+    @InjectModel('Showroom') private readonly showroomModel: Model<Showroom>,
+  ) {}
+  create(createShowroomDto: CreateShowroomDto): Promise<Showroom> {
+    const newShowroom = new this.showroomModel(createShowroomDto);
+    return newShowroom.save();
   }
 
-  findAll() {
-    return `This action returns all showroom`;
+  async findAll(): Promise<Showroom[]> {
+    return this.showroomModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} showroom`;
+  async findOne(id: string): Promise<Showroom> {
+    const showroom = await this.showroomModel.findById(id).exec();
+    if (!showroom) {
+      throw new NotFoundException('Showroom not found');
+    }
+    return showroom;
   }
 
-  update(id: number, updateShowroomDto: UpdateShowroomDto) {
-    return `This action updates a #${id} showroom`;
+  async update(
+    id: string,
+    updateShowroomDto: UpdateShowroomDto,
+  ): Promise<Showroom> {
+    const updatedShowroom = await this.showroomModel
+      .findByIdAndUpdate(id, updateShowroomDto, { new: true })
+      .exec();
+    if (!updatedShowroom) {
+      throw new NotFoundException('Showroom not found');
+    }
+    return updatedShowroom;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} showroom`;
+  async remove(id: string): Promise<Showroom> {
+    const deletedShowroom = await this.showroomModel.findByIdAndDelete(id).exec();
+    if (!deletedShowroom) {
+      throw new NotFoundException('Showroom not found');
+    }
+    return deletedShowroom;
+  }
+
+  async associateProject(
+    showroomId: string,
+    projectIds: string[],
+  ): Promise<Showroom> {
+    const showroom = await this.showroomModel.findById(showroomId).exec();
+    if (!showroom) {
+      throw new NotFoundException('Showroom not found');
+    }
+
+    showroom.projects = [...new Set([...showroom.projects, ...projectIds])];
+    return showroom.save();
   }
 }

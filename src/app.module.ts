@@ -6,15 +6,11 @@ import { ValuesModule } from './values/values.module';
 import { ProductsModule } from './products/products.module';
 import { CoinsModule } from './coins/coins.module';
 import { ContactModule } from './contact/contact.module';
-import { DescriptionsModule } from './coins/descriptions/descriptions.module';
-import { DescriptionsModule } from './values/descriptions/descriptions.module';
-import { DescriptionsModule } from './products/descriptions/descriptions.module';
 import { DescriptionsModule } from './descriptions/descriptions.module';
 import { TextsModule } from './texts/texts.module';
 import { LanguagesModule } from './languages/languages.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProjectsModule } from './projects/projects.module';
-import { ShowroomModule } from './showroom/showroom.module';
 
 @Module({
   imports: [
