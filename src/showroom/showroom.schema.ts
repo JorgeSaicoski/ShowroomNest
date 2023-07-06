@@ -17,9 +17,9 @@ export class Showroom {
 
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Project' }] }) // Array of Project references
   projects: MongooseSchema.Types.ObjectId[];
-  /* !!
-  Here will come the language schema that will have a  list of projects and one showroom.
-  */
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Language' })
+  language: MongooseSchema.Types.ObjectId;
 }
 
 export type ShowroomDocument = Showroom & Document;

@@ -7,19 +7,13 @@ export class Project {
   name: string;
 
   @Prop()
-  description: string;
+  message: string;
 
   @Prop()
   client: string;
 
-  @Prop({ type: [{ type: String }] })
-  images: string[];
-
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Showroom' }) // Reference to Showroom schema
-  showroom: MongooseSchema.Types.ObjectId;
-  /* !!
-  Here will come the language schema that will have a  list of projects and one showroom.
-  */
+  @Prop()
+  contact: string;
 }
 
 export type ProjectDocument = Project & Document;

@@ -11,6 +11,9 @@ export class Language {
 
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Showroom' }] }) // Array of Project references
   showrooms: MongooseSchema.Types.ObjectId[];
+
+  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Text' }] }) // Array of Project references
+  texts: MongooseSchema.Types.ObjectId[];
 }
 
 export type LanguageDocument = Language & Document;
