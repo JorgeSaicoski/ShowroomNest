@@ -13,7 +13,7 @@ export class Showroom {
   client: string;
 
   @Prop()
-  images: string;
+  images: string[];
 
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Project' }] }) // Array of Project references
   projects: MongooseSchema.Types.ObjectId[];

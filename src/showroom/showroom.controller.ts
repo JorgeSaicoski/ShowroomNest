@@ -19,16 +19,27 @@ export class ShowroomController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.showroomService.findOne(+id);
+    return this.showroomService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateShowroomDto: UpdateShowroomDto) {
-    return this.showroomService.update(+id, updateShowroomDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateShowroomDto: UpdateShowroomDto,
+  ) {
+    return this.showroomService.update(id, updateShowroomDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.showroomService.remove(+id);
+    return this.showroomService.remove(id);
+  }
+
+  @Post(':id/associate')
+  async associateProject(
+    @Param('id') showroomId: string,
+    @Body('projectIds') projectIds: string[],
+  ) {
+    return this.showroomService.associateProject(showroomId, projectIds);
   }
 }
