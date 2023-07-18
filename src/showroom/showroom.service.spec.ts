@@ -88,7 +88,7 @@ describe('ShowroomService', () => {
       });
 
       await expect(
-          showroomService.associateProject(mockShowroom._id, [projectId]),
+        showroomService.associateProject(mockShowroom._id, [projectId]),
       ).rejects.toThrow(NotFoundException);
     });
   });

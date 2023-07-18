@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { Showroom } from './entities/showroom.entity';
 import { CreateShowroomDto } from './dto/create-showroom.dto';
 import { UpdateShowroomDto } from './dto/update-showroom.dto';
+import { AssociateProjectDto } from './dto/associate-project.dto';
 
 @Injectable()
 export class ShowroomService {
@@ -50,14 +51,16 @@ export class ShowroomService {
 
   async associateProject(
     showroomId: string,
-    projectIds: string[],
+    AssociateProjectDto: AssociateProjectDto,
   ): Promise<Showroom> {
     const showroom = await this.showroomModel.findById(showroomId).exec();
     if (!showroom) {
       throw new NotFoundException('Showroom not found');
     }
 
-    showroom.projects = [...new Set([...showroom.projects, ...projectIds])];
+    showroom.projects = [
+      ...new Set([...showroom.projects, ...AssociateProjectDto.projects]),
+    ];
     return showroom.save();
   }
 }
