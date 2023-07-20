@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ShowroomService } from './showroom.service';
 import { CreateShowroomDto } from './dto/create-showroom.dto';
 import { UpdateShowroomDto } from './dto/update-showroom.dto';
+import { AssociateProjectDto } from './dto/associate-project.dto';
 
 @Controller('showroom')
 export class ShowroomController {
@@ -38,8 +39,11 @@ export class ShowroomController {
   @Post(':id/associate')
   async associateProject(
     @Param('id') showroomId: string,
-    @Body('projectIds') projectIds: string[],
+    @Body() associateProjectDto: AssociateProjectDto,
   ) {
-    return this.showroomService.associateProject(showroomId, projectIds);
+    return this.showroomService.associateProject(
+      showroomId,
+      associateProjectDto,
+    ); // Use the DTO instance here
   }
 }

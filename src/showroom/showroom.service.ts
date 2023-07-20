@@ -11,8 +11,8 @@ export class ShowroomService {
   constructor(
     @InjectModel('Showroom') private readonly showroomModel: Model<Showroom>,
   ) {}
-  create(createShowroomDto: CreateShowroomDto): Promise<Showroom> {
-    const newShowroom = new this.showroomModel(createShowroomDto);
+  create(dto: CreateShowroomDto): Promise<Showroom> {
+    const newShowroom = new this.showroomModel(dto);
     return newShowroom.save();
   }
 
@@ -30,10 +30,10 @@ export class ShowroomService {
 
   async update(
     id: string,
-    updateShowroomDto: UpdateShowroomDto,
+    dto: UpdateShowroomDto,
   ): Promise<Showroom> {
     const updatedShowroom = await this.showroomModel
-      .findByIdAndUpdate(id, updateShowroomDto, { new: true })
+      .findByIdAndUpdate(id, dto, { new: true })
       .exec();
     if (!updatedShowroom) {
       throw new NotFoundException('Showroom not found');
@@ -51,16 +51,14 @@ export class ShowroomService {
 
   async associateProject(
     showroomId: string,
-    AssociateProjectDto: AssociateProjectDto,
+    dto: AssociateProjectDto,
   ): Promise<Showroom> {
     const showroom = await this.showroomModel.findById(showroomId).exec();
     if (!showroom) {
       throw new NotFoundException('Showroom not found');
     }
 
-    showroom.projects = [
-      ...new Set([...showroom.projects, ...AssociateProjectDto.projects]),
-    ];
+    showroom.projects = [...new Set([...showroom.projects, ...dto.projects])];
     return showroom.save();
   }
 }
