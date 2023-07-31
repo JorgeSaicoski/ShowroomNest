@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Showroom } from './entities/showroom.entity';
+import { Showroom } from './showroom.schema';
 import { CreateShowroomDto } from './dto/create-showroom.dto';
 import { UpdateShowroomDto } from './dto/update-showroom.dto';
 import { AssociateProjectDto } from './dto/associate-project.dto';

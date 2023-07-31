@@ -16,11 +16,16 @@ export class Showroom {
   images: string[];
 
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Project' }] }) // Array of Project references
-  projects: MongooseSchema.Types.ObjectId[];
+  projects: (MongooseSchema.Types.ObjectId | string)[];
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Language' })
-  language: MongooseSchema.Types.ObjectId;
+  language: (MongooseSchema.Types.ObjectId | string)[];
 }
 
 export type ShowroomDocument = Showroom & Document;
 export const ShowroomSchema = SchemaFactory.createForClass(Showroom);
+
+/*  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Project' }] }) // Array of Project references
+  projects: MongooseSchema.Types.ObjectId[];
+
+ */
